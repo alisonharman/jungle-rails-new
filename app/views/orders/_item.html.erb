@@ -1,0 +1,13 @@
+<tr>
+  <td>
+    <h4><%= product.name %></h4>
+    <br>
+    <p><%= product.description %></p>
+  </td>
+  <td>
+    <%= quantity %>
+  </td>
+  <td>
+    <%= humanized_money_with_symbol total.to_f/100 %>
+  </td>
+</tr>
