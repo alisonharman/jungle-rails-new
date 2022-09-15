@@ -1,3 +1,24 @@
-<h1>Admin Dashboard</h1>
-<p> There are this many products in <%= link_to "store:", admin_products_path %> <%= @productCount %> </p>
-<p> There are this many categories of product: <%= @categoryCount %> </p>
+<section class="admin-products-index">
+
+  <header class="page-header">
+    <h1>Admin &raquo; Dashboard</h1>
+  </header>
+
+  <div class="panel panel-default products">
+
+    <table class="table table-bordered">
+      <tbody>
+      <tr>
+      <td>
+      <p> There are this many products in <%= link_to "store:", admin_products_path %> <%= @productCount %> </p>
+      </td>
+      </tr>
+      <tr>
+      <td>
+      <p> There are this many categories of product: <%= @categoryCount %> </p>
+      </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
