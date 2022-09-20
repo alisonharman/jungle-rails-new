@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'sessions/new'
   namespace :admin do
     get 'categories/index'
     get 'categories/new'
