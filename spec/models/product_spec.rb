@@ -2,7 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
   describe 'Validations' do
-    # validation tests/examples here
+    
+    it 'if all fields not nil for product, it will save succefully' do
+      category = Category.create(name: 'Apparel')
+      @product = category.products.new
+      @product.name = "name"
+      @product.price = 100
+      @product.quantity = 10
+      expect(@product.save).to eql(true)
+    end
+
     it 'fails with no name' do
 
       category = Category.create(name: 'Apparel')
