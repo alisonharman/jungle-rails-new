@@ -13,6 +13,17 @@ RSpec.describe User, type: :model do
     expect(@user.save).to eql(true)
   end
 
+  it 'should reject if the password field is empty' do
+    @user = User.new({
+      first_name: 'Amy',
+      last_name: 'Jones',
+      email: 'amy@1234.com',
+      password_confirmation: '1234' 
+    })
+    expect(@user.save).to eql(false)
+    expect(@user.errors.full_messages).to include("Password can't be blank")
+  end
+
 
   describe 'Validations' do
     # validation examples here
