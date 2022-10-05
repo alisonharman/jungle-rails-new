@@ -8,9 +8,9 @@ RSpec.describe User, type: :model do
       @user = User.new({
         first_name: 'Amy',
         last_name: 'Jones',
-        email: 'amy@1234.com',
-        password: '1234',
-        password_confirmation: '1234' 
+        email: 'amy@123456.com',
+        password: '123456',
+        password_confirmation: '123456' 
       })
       expect(@user.save).to eql(true)
     end
@@ -40,6 +40,41 @@ RSpec.describe User, type: :model do
 
       expect(save).to be false
       expect(errors).to include("Password confirmation doesn't match Password")
+    end
+
+    it 'should not accept blank email' do
+      @user = User.new({
+        first_name: 'Walter',
+        last_name: 'White',
+        password: 'ww0000',
+        password_confirmation: 'ww0000'
+        })
+      @user.save
+      errors = @user.errors.full_messages
+      expect(errors).to include("Email can't be blank")
+    end
+    
+    it 'should have a first_name' do
+      @user = User.new({
+        last_name: 'White',
+        email: 'ww@qmail.com',
+        password: 'ww0000',
+        password_confirmation: 'ww0000'
+      })
+      @user.save          
+      errors = @user.errors.full_messages
+      expect(errors).to include("First name can't be blank")
+    end
+    it 'should have a last_name' do
+      @user = User.new({
+        first_name: 'Walter',
+        email: 'ww@qmail.com',
+        password: 'ww0000',
+        password_confirmation: 'ww0000'
+      })
+      @user.save          
+      errors = @user.errors.full_messages
+      expect(errors).to include("Last name can't be blank")
     end
  
   end
