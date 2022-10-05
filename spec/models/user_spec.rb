@@ -3,6 +3,22 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'Validations' do
 
+    # Persistent user to compare uneiqueness
+  before(:all) do
+    @unique_user = User.new({
+      first_name: 'Elon',
+      last_name: 'Musk',
+      email: 'rocketman@telsa.com',
+      password: 'rocketman',
+      password_confirmation: 'rocketman'
+      })
+    @unique_user.save
+  end
+    
+  after(:each) do
+    @user.destroy
+  end
+
   
     it 'should save a user when all fields are filled out' do
       @user = User.new({
@@ -104,6 +120,19 @@ RSpec.describe User, type: :model do
       expect(errors).to include("Email can't be blank")
     end
 
+    it 'should have a unique email address' do
+      @user = User.new({
+        first_name: 'Walter',
+        last_name: 'White',
+        email: 'rocketman@telsa.com',
+        password: 'ww0000',
+        password_confirmation: 'ww0000'
+      })
+      @user.save          
+      errors = @user.errors.full_messages
+      expect(errors).to include("Email has already been taken")
+    end
+    
 
 
   end
