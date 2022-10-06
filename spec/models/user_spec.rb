@@ -205,6 +205,21 @@ RSpec.describe User, type: :model do
         expect(login.id).to eq(@user.id)
       end
 
+      it "should still login even with surrounding whitespace" do
+        @user = User.new({
+          first_name: 'Syd',
+          last_name: 'Vicious',
+          email: 'sv@qmail.com',
+          password: 'sv1234',
+          password_confirmation: 'sv1234'
+        })
+          saved = @user.save
+          login = User.authenticate_with_credentials('  sv@qmail.coM ', 'sv1234')
+          expect(saved).to be true       
+          expect(login).to_not be nil
+          expect(login.id).to eq(@user.id)
+      end
+
   end
 
 end
