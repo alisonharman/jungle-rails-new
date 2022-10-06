@@ -191,6 +191,19 @@ RSpec.describe User, type: :model do
       expect(login).to be nil
     end
     
+    it 'should still login while email address is wrong case' do
+      @user = User.new({
+        first_name: 'Syd',
+        last_name: 'Vicious',
+        email: 'sv@qMAIl.com',
+        password: 'sv1234',
+        password_confirmation: 'sv1234'
+      })
+        saved = @user.save
+        login = User.authenticate_with_credentials('sv@qmail.coM', 'sv1234')
+        expect(saved).to be true       
+        expect(login.id).to eq(@user.id)
+      end
 
   end
 
