@@ -133,7 +133,40 @@ RSpec.describe User, type: :model do
       expect(errors).to include("Email has already been taken")
     end
     
+    it 'should login with correct credentials' do
+      login_email = 'sg@qmail.com'
+      login_password = 'sg0000'
 
+      @user = User.new({
+        first_name: 'Saul',
+        last_name: 'Goodman',
+        email: login_email,
+        password: login_password,
+        password_confirmation: login_password
+      })
+      saved = @user.save     
+      login = User.authenticate_with_credentials(login_email, login_password)
+      database_user_id = User.find_by(email: login_email).id
+      expect(saved).to be true
+      expect(login.id).to eq(database_user_id)
+    end
 
+    it 'should reject with incorrect password' do
+      login_email = 'sg@qmail.com'
+      login_password = 'sg0000'
+
+      @user = User.new({
+        first_name: 'Saul',
+        last_name: 'Goodman',
+        email: login_email,
+        password: login_password,
+        password_confirmation: login_password
+      })
+      saved = @user.save     
+      login = User.authenticate_with_credentials(login_email, 'wrong_login_password')
+      database_user_id = User.find_by(email: login_email).id
+      expect(saved).to be true
+      expect(login).to be false
+    end
   end
 end
