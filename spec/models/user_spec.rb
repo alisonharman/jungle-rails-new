@@ -205,7 +205,7 @@ RSpec.describe User, type: :model do
         expect(login.id).to eq(@user.id)
       end
 
-      it "should still login even with surrounding whitespace" do
+      it "should login even with surrounding whitespace around email" do
         @user = User.new({
           first_name: 'Syd',
           last_name: 'Vicious',
