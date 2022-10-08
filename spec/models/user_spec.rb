@@ -122,17 +122,30 @@ RSpec.describe User, type: :model do
 
     it 'should have a unique email address' do
       @user = User.new({
-        first_name: 'Walter',
-        last_name: 'White',
+        first_name: 'Davy',
+        last_name: 'Jones',
         email: 'rocketman@telsa.com',
-        password: 'ww0000',
-        password_confirmation: 'ww0000'
+        password: 'dj1234',
+        password_confirmation: 'dj1234'
       })
       @user.save          
       errors = @user.errors.full_messages
       expect(errors).to include("Email has already been taken")
     end
     
+    it 'should accept a email of the correct format only' do
+      @user = User.new({
+        first_name: 'Davy',
+        last_name: 'Jones',
+        email: 'whatever.com',
+        password: 'dj1234',
+        password_confirmation: 'dj1234'
+        })
+      @successful_entry = @user.save          
+      errors = @user.errors.full_messages
+      expect(errors).to include("Email is invalid")
+    end
+      
     
   end
 
